@@ -1,0 +1,4 @@
+users.togglePrimaryEmailVisibility,!email;!visibility,Toggle primary email visibility,set address
+users.unblock,!username,Unblock a user,
+users.unfollow,!username,Unfollow a user,
+users.updateAuthenticated,name;email;blog;company;location;hireable;bio,Update the authenticated user,

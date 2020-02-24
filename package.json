@@ -1,6 +1,6 @@
 {
   "name": "extra-github",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GitHub, Inc. is a company that hosts Git-based version control system.",
   "main": "index.js",
   "scripts": {
