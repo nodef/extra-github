@@ -1,2 +1,1 @@
-# extra-github
-GitHub, Inc. is a US-based global company that provides hosting for software development version control using Git.
+GitHub, Inc. is a company that hosts Git-based version control system.

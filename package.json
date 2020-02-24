@@ -1,0 +1,32 @@
+{
+  "name": "extra-github",
+  "version": "0.0.1",
+  "description": "GitHub, Inc. is a company that hosts Git-based version control system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodef/extra-github.git"
+  },
+  "keywords": [
+    "extra",
+    "github",
+    "users",
+    "teams",
+    "search",
+    "repos",
+    "orgs",
+    "projects",
+    "pulls",
+    "issues",
+    "gists"
+  ],
+  "author": "wolfram77@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nodef/extra-github/issues"
+  },
+  "homepage": "https://github.com/nodef/extra-github#readme"
+}
