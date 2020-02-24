@@ -68,11 +68,11 @@ function writeCsvs(args, cmds) {
   var d = 'name,desc'+os.EOL;
   for(var {name, desc} of args.values())
     d += `${name},"${desc}"`+os.EOL;
-  fs.writeFileSync('assets/args.csv', d);
+  fs.writeFileSync('assets/parameters.csv', d);
   d = 'func,args,desc'+os.EOL;
   for(var {func, args, desc} of cmds.values())
     d += `${func},${args},"${desc}"`+os.EOL;
-  fs.writeFileSync('assets/cmds.csv', d);
+  fs.writeFileSync('assets/commands.csv', d);
 }
 
 async function main() {
