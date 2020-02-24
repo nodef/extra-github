@@ -1,6 +1,6 @@
 {
   "name": "extra-github",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "GitHub, Inc. is a company that hosts Git-based version control system.",
   "main": "index.js",
   "scripts": {
@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/nodef/extra-github/issues"
   },
-  "homepage": "https://github.com/nodef/extra-github#readme"
+  "homepage": "https://github.com/nodef/extra-github#readme",
+  "dependencies": {
+    "@octokit/rest": "17"
+  }
 }
