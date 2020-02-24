@@ -1,4 +1,4 @@
-func,args,desc
+name,params,desc
 actions.cancelWorkflowRun,!owner;!repo;!run_id,"Cancel a workflow run"
 actions.createOrUpdateSecretForRepo,!owner;!repo;!name;encrypted_value;key_id,"Create or update a secret for a repository"
 actions.createRegistrationToken,!owner;!repo,"Create a registration token"

@@ -1,3 +1,4 @@
+const csvParse = require('csv-parse');
 const https = require('https');
 const os = require('os');
 const fs = require('fs');
@@ -9,6 +10,7 @@ const MAP_HTMLESC = new Map([
   ['gt', '>'],
   ['lt', '<'],
 ]);
+const EOL = os.EOL;
 
 
 
@@ -65,18 +67,60 @@ async function getArgsCmds() {
 }
 
 function writeCsvs(args, cmds) {
-  var d = 'name,desc'+os.EOL;
+  var d = 'name,desc'+EOL;
   for(var {name, desc} of args.values())
-    d += `${name},"${desc}"`+os.EOL;
+    d += `${name},"${desc}"`+EOL;
   fs.writeFileSync('assets/parameters.csv', d);
-  d = 'func,args,desc'+os.EOL;
+  d = 'name,params,desc'+EOL;
   for(var {func, args, desc} of cmds.values())
-    d += `${func},${args},"${desc}"`+os.EOL;
+    d += `${func},${args},"${desc}"`+EOL;
   fs.writeFileSync('assets/commands.csv', d);
 }
 
-async function main() {
-  var {args, cmds} = await getArgsCmds();
-  writeCsvs(args, cmds);
+function writeCorpusCb(fn) {
+  var parameters = new Map(), commands = new Map(), done = 0, onEnd = () => {
+    if(++done<2) return;
+    var d = '';
+    for(var k of ['name', 'desc']) {
+      d += `const p_${k} = [`+EOL;
+      for(var v of parameters.values())
+        d += `"${v[k]}",`+EOL;
+      d += `];`+EOL;
+    }
+    for(var k of ['name', 'params', 'desc']) {
+      d += `const c_${k} = [`+EOL;
+      for(var v of commands.values())
+        d += `"${v[k]}",`+EOL;
+      d += `];`+EOL;
+    }
+    d += `const parameters = {name: p_name, desc: p_desc}`+EOL;
+    d += `const commands = {name: p_name, params: c_params, desc: p_desc}`+EOL;
+    d += `exports.parameters = parameters;`+EOL;
+    d += `exports.commands = commands;`+EOL;
+    fs.writeFileSync('corpus.js', d);
+    fn();
+  };
+  var stream1 = fs.createReadStream('assets/parameters.csv').pipe(csvParse({columns: true, comment: '#'}));
+  stream1.on('data', (r) => {
+    parameters.set(r.name, r);
+  });
+  stream1.on('end', onEnd);
+  var stream2 = fs.createReadStream('assets/commands.csv').pipe(csvParse({columns: true, comment: '#'}));
+  stream2.on('data', (r) => {
+    commands.set(r.name, r);
+  });
+  stream2.on('end', onEnd);
 }
-main();
+
+function writeCorpus() {
+  return new Promise((fres, frej) => writeCorpusCb(fres));
+}
+
+async function main(a) {
+  if(a[2]==='csv') {
+    var {args, cmds} = await getArgsCmds();
+    writeCsvs(args, cmds);
+  }
+  await writeCorpus();
+}
+main(process.argv);
